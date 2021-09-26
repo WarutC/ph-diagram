@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PH Diagram</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+</head>
+<body>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+<script>
+  const mockData = [
+    {x: 265.9, y: 3},
+    {x: 399.0, y: 3},
+    {x: 440.2, y: 12},
+    {x: 265.9, y: 12},
+
+    {x: 265.9, y: 3}, // add same data as the first one, to draw the closing line
+  ]
+
+  let myChart;
+  let chartData = {
+    datasets: [{
+      data: mockData,
+      borderColor: 'black',
+      borderWidth: 1,
+      pointBackgroundColor: ['#000',
+        '#00bcd6', '#d300d6'
+      ],
+      pointBorderColor: ['#000',
+        '#00bcd6', '#d300d6'
+      ],
+      pointRadius: 5,
+      pointHoverRadius: 5,
+      fill: true,
+      tension: 0,
+      showLine: true
+    }]
+  };
+
+  const options = {
+    legend: false,
+    tooltips: false,
+    scales: {
+      xAxes: [{}],
+      yAxes: [{
+        ticks: {
+          min: 0.5,
+          max: 90,
+          // padding: 10
+        },
+        type: 'logarithmic',
+        display: true
+      }]
+    }
+  }
+
+  const canvasElement = document.getElementById('myChart')
+  const canvasCtx = canvasElement.getContext('2d')
+  myChart = new Chart(canvasCtx, {
+    type: 'scatter',
+    data: chartData,
+    options: options
+  })
+</script>
+</body>
+</html>
