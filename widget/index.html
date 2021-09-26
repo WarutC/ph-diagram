@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>PH Diagram</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 </head>
 <body>
 <div>
-    <canvas id="myChart"></canvas>
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 </div>
+<script src="./node_modules/chart.js/dist/chart.js"></script>
+
 <script>
   const mockData = [
     {x: 265.9, y: 3},
@@ -22,14 +23,15 @@
   let myChart;
   let chartData = {
     datasets: [{
+      label: "Cycle Points",
       data: mockData,
-      borderColor: 'black',
+      borderColor: '#00bcd6',
       borderWidth: 1,
-      pointBackgroundColor: ['#000',
-        '#00bcd6', '#d300d6'
+      pointBackgroundColor: ['#00bcd6',
+        '#00bcd6', '#00bcd6', '#00bcd6'
       ],
-      pointBorderColor: ['#000',
-        '#00bcd6', '#d300d6'
+      pointBorderColor: ['#00bcd6',
+        '#00bcd6', '#00bcd6', '#00bcd6'
       ],
       pointRadius: 5,
       pointHoverRadius: 5,
@@ -40,19 +42,34 @@
   };
 
   const options = {
-    legend: false,
-    tooltips: false,
+    plugins: {
+      title: {
+        display: true,
+        text: 'log(p)-h chart R134A',
+        align: 'start',
+      },
+      subtitle: {
+        display: true,
+        text: 'COP (Heat Pump) = 4.22 / COP (Refrigerator) = 3.22',
+        align: 'start'
+      }
+    },
     scales: {
-      xAxes: [{}],
-      yAxes: [{
-        ticks: {
-          min: 0.5,
-          max: 90,
-          // padding: 10
+      y: {
+        title: {
+          text: 'Pressure [bar]',
+          display: true
         },
         type: 'logarithmic',
-        display: true
-      }]
+        max: 100,
+        min: 0.5
+      },
+      x: {
+        title: {
+          text: 'spec. Enthalpie [kJ/kg]',
+          display: true
+        },
+      }
     }
   }
 
@@ -61,7 +78,7 @@
   myChart = new Chart(canvasCtx, {
     type: 'scatter',
     data: chartData,
-    options: options
+    options: options,
   })
 </script>
 </body>
